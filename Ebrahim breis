@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لعبة: هل تعرفني جيداً؟</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        .question {
+            background: white;
+            margin: 15px auto;
+            padding: 15px;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤔 هل تعرفني جيداً؟</h1>
+    <div id="quiz"></div>
+    <button onclick="checkAnswers()">تحقق من إجاباتك</button>
+    <p id="result"></p>
+
+    <script>
+        const questions = [
+            {
+                question: "ما هو طعامي المفضل؟",
+                options: ["بيتزا", "سوشي", "مندي", "كبسة"],
+                answer: "كبسة"
+            },
+            {
+                question: "ما هو لوني المفضل؟",
+                options: ["أزرق", "أحمر", "أخضر", "أسود"],
+                answer: "أزرق"
+            },
+            {
+                question: "أي بلد أتمنى زيارتها؟",
+                options: ["اليابان", "فرنسا", "تركيا", "المالديف"],
+                answer: "المالديف"
+            },
+            {
+                question: "ما هي هوايتي المفضلة؟",
+                options: ["القراءة", "الرياضة", "السفر", "الطبخ"],
+                answer: "السفر"
+            },
+            {
+                question: "ما هو نوع الأفلام المفضل لدي؟",
+                options: ["أكشن", "كوميدي", "رعب", "دراما"],
+                answer: "أكشن"
+            }
+        ];
+
+        // عرض الأسئلة
+        let quizHTML = '';
+        questions.forEach((q, index) => {
+            quizHTML += `<div class="question"><h3>${q.question}</h3>`;
+            q.options.forEach(option => {
+                quizHTML += `<label><input type="radio" name="q${index}" value="${option}"> ${option}</label><br>`;
+            });
+            quizHTML += '</div>';
+        });
+        document.getElementById('quiz').innerHTML = quizHTML;
+
+        // التحقق من الإجابات
+        function checkAnswers() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedOption && selectedOption.value === q.answer) {
+                    score++;
+                }
+            });
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `🎯 نتيجتك: ${score} من ${questions.length}!`;
+            if (score === questions.length) {
+                resultElement.innerHTML += "<br>💡 أنت أعرف الناس بي!";
+            }
+        }
+    </script>
+</body>
+</html>
